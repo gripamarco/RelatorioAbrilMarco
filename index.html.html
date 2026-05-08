@@ -1231,7 +1231,7 @@
 
   .mini-card .lbl-emoji { font-size: 18px; margin-right: 6px; vertical-align: middle; line-height: 1; }
 
-  /* CALCULO DETALHADO — explicação do R$ 34.790+ */
+  /* CALCULO DETALHADO — explicação do R$ 31.663+ */
   .calculo-card {
     background: var(--white);
     border: 1px solid var(--gray-200);
@@ -1412,9 +1412,113 @@
     line-height: 1.5;
   }
   .calculo-total .grand-conclusion strong { color: var(--red); }
+
+  /* RADIOS escondidos — controlam o seletor de meses */
+  .month-radio { display: none; }
+
+  /* SELETOR DE MESES (sticky, CSS-only) */
+  .month-selector {
+    position: sticky;
+    top: 49px;
+    z-index: 40;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: saturate(180%) blur(12px);
+    -webkit-backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .month-selector-inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 12px var(--gutter);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .month-selector-inner::-webkit-scrollbar { display: none; }
+  .month-selector .ms-label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+    color: var(--gray-500);
+    flex-shrink: 0;
+    margin-right: 6px;
+  }
+  .month-selector .ms-btn {
+    background: transparent;
+    border: 1px solid var(--gray-200);
+    padding: 7px 14px;
+    border-radius: 999px;
+    font: 600 12.5px Inter, sans-serif;
+    color: var(--gray-700);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 200ms ease, background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+    flex-shrink: 0;
+    user-select: none;
+  }
+  .month-selector .ms-btn:hover { color: var(--black); border-color: var(--gray-400); }
+
+  /* MONTH PAGES — escondidas por padrão */
+  .month-page { display: none; }
+
+  /* Mostrar a page correspondente ao radio checked */
+  #r-marco-abril-2026:checked ~ #page-marco-abril-2026,
+  #r-janeiro-fevereiro-2026:checked ~ #page-janeiro-fevereiro-2026,
+  #r-dezembro-2025:checked ~ #page-dezembro-2025,
+  #r-novembro-2025:checked ~ #page-novembro-2025,
+  #r-outubro-2025:checked ~ #page-outubro-2025,
+  #r-setembro-2025:checked ~ #page-setembro-2025,
+  #r-agosto-2025:checked ~ #page-agosto-2025 {
+    display: block;
+  }
+
+  /* Estilo do label ativo (correspondente ao radio checked) */
+  #r-marco-abril-2026:checked ~ .month-selector label[for="r-marco-abril-2026"],
+  #r-janeiro-fevereiro-2026:checked ~ .month-selector label[for="r-janeiro-fevereiro-2026"],
+  #r-dezembro-2025:checked ~ .month-selector label[for="r-dezembro-2025"],
+  #r-novembro-2025:checked ~ .month-selector label[for="r-novembro-2025"],
+  #r-outubro-2025:checked ~ .month-selector label[for="r-outubro-2025"],
+  #r-setembro-2025:checked ~ .month-selector label[for="r-setembro-2025"],
+  #r-agosto-2025:checked ~ .month-selector label[for="r-agosto-2025"] {
+    background: var(--red);
+    color: var(--white);
+    border-color: var(--red);
+    box-shadow: 0 4px 12px rgba(220,38,38,0.25);
+  }
+
+  .mini-dash { padding: 60px 0 100px; }
+  .mini-dash .mini-h3 {
+    font-size: 18px;
+    font-weight: 800;
+    margin-top: 48px;
+    margin-bottom: 18px;
+    letter-spacing: -0.02em;
+  }
+  .mini-dash .info-banner {
+    background: var(--red-pale);
+    border-left: 4px solid var(--red);
+    padding: 14px 18px;
+    border-radius: 0 10px 10px 0;
+    color: var(--gray-700);
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 32px;
+  }
+  .mini-dash .info-banner b { color: var(--red); }
 </style>
 </head>
 <body>
+<!-- Radios (CSS-only mês selector) -->
+<input type="radio" name="month-radio" id="r-marco-abril-2026" checked class="month-radio">
+<input type="radio" name="month-radio" id="r-janeiro-fevereiro-2026" class="month-radio">
+<input type="radio" name="month-radio" id="r-dezembro-2025" class="month-radio">
+<input type="radio" name="month-radio" id="r-novembro-2025" class="month-radio">
+<input type="radio" name="month-radio" id="r-outubro-2025" class="month-radio">
+<input type="radio" name="month-radio" id="r-setembro-2025" class="month-radio">
+<input type="radio" name="month-radio" id="r-agosto-2025" class="month-radio">
 
 <nav class="nav">
   <div class="nav-inner">
@@ -1437,6 +1541,20 @@
   </div>
 </nav>
 
+<!-- Seletor de meses (CSS-only via radios) -->
+<div class="month-selector">
+  <div class="month-selector-inner">
+    <span class="ms-label">Mês:</span>
+    <label for="r-marco-abril-2026" class="ms-btn">Mar / Abr 2026</label>
+    <label for="r-janeiro-fevereiro-2026" class="ms-btn">Jan / Fev 2026</label>
+    <label for="r-dezembro-2025" class="ms-btn">Dez 2025</label>
+    <label for="r-novembro-2025" class="ms-btn">Nov 2025</label>
+    <label for="r-outubro-2025" class="ms-btn">Out 2025</label>
+    <label for="r-setembro-2025" class="ms-btn">Set 2025</label>
+    <label for="r-agosto-2025" class="ms-btn">Ago 2025</label>
+  </div>
+</div>
+
 <header class="hero">
   <div class="container">
     <div class="hero-grid">
@@ -1451,7 +1569,7 @@
       </div>
       <div class="hero-meta-item">
         <div class="label">Investimento Total</div>
-        <div class="value">R$ 19.774,86</div>
+        <div class="value">R$ 23.546,86</div>
       </div>
       <div class="hero-meta-item">
         <div class="label">Pessoas Alcançadas</div>
@@ -1464,11 +1582,12 @@
         </div>
       </div>
       <div class="phone-stage" id="phoneStage" aria-hidden="true">
-        <img id="phoneImg" class="phone-img" src="app-screen.png" alt="App DWV — São Paulo" />
+        <img id="phoneImg" class="phone-img" src="https://site.dwvapp.com.br/wp-content/uploads/2025/05/Home-1.png" alt="App DWV — São Paulo" />
       </div>
     </div>
   </div>
 </header>
+<div class="month-page" id="page-marco-abril-2026" data-month-page="marco-abril-2026">
 
 <!-- ============ RESUMO GERAL · ROI ============ -->
 <section id="resumo" class="summary-section">
@@ -1480,20 +1599,19 @@
     <div class="summary-flow">
       <div class="summary-block">
         <div class="label">💸 O que investimos</div>
-        <div class="big">R$ 18.811</div>
+        <div class="big">R$ 23.547</div>
         <div class="breakdown">
-          <div class="row"><span>App downloads</span><b>R$ 14.819</b></div>
-          <div class="row"><span>Vídeos &amp; remarketing</span><b>R$ 3.772</b></div>
+          <div class="row"><span>Ads App (downloads + vídeos + remarketing)</span><b>R$ 22.583</b></div>
           <div class="row"><span>Clube Premium (Meta Ads)</span><b>R$ 964</b></div>
-          <div class="row"><span>Total bimestre</span><b>R$ 18.811</b></div>
+          <div class="row"><span>Total bimestre</span><b>R$ 23.547</b></div>
         </div>
       </div>
       <div class="arrow">→</div>
       <div class="summary-block win">
         <div class="label">📈 O que estamos ganhando</div>
-        <div class="big">R$ 34.790+</div>
+        <div class="big">R$ 31.663+</div>
         <div class="breakdown">
-          <div class="row"><span>Receita Clube Premium (LTV 12m)</span><b>R$ 31.270</b></div>
+          <div class="row"><span>Receita Clube Premium (LTV 12m)</span><b>R$ 28.143</b></div>
           <div class="row"><span>Receita YouTube</span><b>R$ 3.520</b></div>
           <div class="row"><span>+ 1.898 cadastros app</span><b>ativos</b></div>
           <div class="row"><span>+ 4.482 seguidores Insta</span><b>topo de funil</b></div>
@@ -1503,14 +1621,14 @@
 
     <div class="calculo-card">
       <div class="calculo-head">
-        <span class="badge">📊 Como chegamos a R$ 34.790+</span>
+        <span class="badge">📊 Como chegamos a R$ 31.663+</span>
         <h3>O cálculo passo a passo — sem caixa-preta</h3>
       </div>
 
       <!-- Aviso de atribuição -->
       <div style="background:var(--red-pale);border-left:4px solid var(--red);padding:14px 18px;border-radius:0 10px 10px 0;margin-bottom:20px;font-size:14px;line-height:1.55">
         <b style="color:var(--red);text-transform:uppercase;letter-spacing:0.08em;font-size:11px;display:block;margin-bottom:6px">⚠ Atribuição honesta</b>
-        Das <b>32 vendas totais</b> do Clube Premium no bimestre, somente as <b>10 vendas marcadas como "Como conheceu a DWV: Rede Social"</b> contam aqui (5 em março + 5 em abril). As outras 22 vieram do comercial, indicações ou outros canais — esse retorno é deles, não do marketing.
+        Das <b>32 vendas totais</b> do Clube Premium no bimestre, somente as <b>9 vendas marcadas como "Como conheceu a DWV: Redes Sociais"</b> contam aqui (5 em março + 4 em abril, conforme planilha CRM). As outras 23 vieram do comercial, indicações ou outros canais — esse retorno é deles, não do marketing.
       </div>
 
       <!-- Bloco Clube Premium -->
@@ -1518,7 +1636,7 @@
         <div class="block-title">
           <span class="block-icon">💎</span>
           <span>Clube Premium</span>
-          <span class="block-amt">R$ 31.270</span>
+          <span class="block-amt">R$ 28.143</span>
         </div>
         <p class="lead">A DWV oferece <b>3 planos mensais</b> do Clube Premium para incorporadoras. Para o cálculo do retorno, usamos o <b>plano médio (R$ 244)</b>:</p>
         <div class="plan-grid">
@@ -1540,18 +1658,18 @@
 
         <div class="formula">
           <div class="step">
-            <span class="step-label">10 vendas atribuídas × R$ 244 mensalidade × 12 meses</span>
-            <span class="step-value">R$ 29.280</span>
-            <span class="step-note">LTV anual da mensalidade — só contando as 10 vendas que vieram comprovadamente do marketing (5 mar + 5 abr)</span>
+            <span class="step-label">9 vendas atribuídas × R$ 244 mensalidade × 12 meses</span>
+            <span class="step-value">R$ 26.352</span>
+            <span class="step-note">LTV anual da mensalidade — só contando as 9 vendas que vieram comprovadamente do marketing (5 mar + 4 abr, conforme CRM)</span>
           </div>
           <div class="step">
-            <span class="step-label">10 vendas atribuídas × R$ 199 setup</span>
-            <span class="step-value">R$ 1.990</span>
+            <span class="step-label">9 vendas atribuídas × R$ 199 setup</span>
+            <span class="step-value">R$ 1.791</span>
             <span class="step-note">Taxa única paga uma vez quando a incorporadora entra no Clube</span>
           </div>
           <div class="step total">
             <span class="step-label">Subtotal Clube Premium</span>
-            <span class="step-value accent">R$ 31.270</span>
+            <span class="step-value accent">R$ 28.143</span>
           </div>
         </div>
       </div>
@@ -1583,7 +1701,7 @@
       <!-- Total final -->
       <div class="calculo-total">
         <div class="grand-label">Total bimestre — receita estimada atribuível ao marketing</div>
-        <div class="grand-value">R$ 34.790+</div>
+        <div class="grand-value">R$ 31.663+</div>
         <div class="grand-note">O sinal <b>"+"</b> existe porque <b>NÃO estamos contabilizando</b> o valor futuro de:</div>
         <ul class="extras">
           <li><b>1.898 novos cadastros</b> de corretores na plataforma — quanto mais corretores ativos, maior o interesse das incorporadoras em pagar pelo Clube Premium (efeito de rede)</li>
@@ -1593,7 +1711,7 @@
           <li>Eventual <b>upgrade dos clientes</b> Clube Premium do plano básico (R$ 209) para o premium (R$ 279) ao longo do contrato</li>
         </ul>
         <div class="grand-conclusion">
-          Esse <strong>R$ 34.790+</strong> é, portanto, um <strong>piso ultra conservador</strong>. Considera somente vendas explicitamente marcadas como "Rede Social" no formulário "Como conheceu a DWV". O ROI real considerando branding, fortalecimento do funil e atribuição imperfeita é significativamente maior.
+          Esse <strong>R$ 31.663+</strong> é, portanto, um <strong>piso ultra conservador</strong>. Considera somente vendas explicitamente marcadas como "Rede Social" no formulário "Como conheceu a DWV". O ROI real considerando branding, fortalecimento do funil e atribuição imperfeita é significativamente maior.
         </div>
       </div>
     </div>
@@ -1601,13 +1719,13 @@
     <div class="roi-grid" style="margin-top:32px">
       <div class="roi-card dark">
         <div class="label">Retorno consolidado</div>
-        <div class="value accent">1,85×</div>
-        <div class="sub">R$ 34.790 ÷ R$ 18.811 — atribuindo somente as 10 vendas Clube Premium marcadas como "Rede Social" + receita YouTube</div>
+        <div class="value accent">1,34×</div>
+        <div class="sub">R$ 31.663 ÷ R$ 23.547 — atribuindo somente as 9 vendas Clube Premium marcadas como "Redes Sociais" no CRM + receita YouTube</div>
       </div>
       <div class="roi-card">
         <div class="label">Custo por cadastro app</div>
-        <div class="value">R$ 7,80</div>
-        <div class="sub">R$ 14.819 ÷ 1.898 cadastros — corretores ativos no funil</div>
+        <div class="value">R$ 11,90</div>
+        <div class="sub">R$ 22.583 (App + vídeos) ÷ 1.898 cadastros — corretores ativos no funil</div>
       </div>
       <div class="roi-card">
         <div class="label">Crescimento topo de funil</div>
@@ -1616,8 +1734,8 @@
       </div>
       <div class="roi-card">
         <div class="label">Vendas Clube Premium</div>
-        <div class="value">10<span style="font-size:18px;color:var(--gray-400);font-weight:600"> / 32</span></div>
-        <div class="sub"><b>10 atribuídas a Rede Social</b> (5 mar + 5 abr) — únicas contadas no ROI. Outras 22 (de 32 totais) vieram de comercial, indicações ou outros canais.</div>
+        <div class="value">9<span style="font-size:18px;color:var(--gray-400);font-weight:600"> / 32</span></div>
+        <div class="sub"><b>9 atribuídas a Redes Sociais</b> (5 mar + 4 abr, conforme CRM). Outras 23 (de 32 totais) vieram de comercial, indicações ou outros canais.</div>
       </div>
     </div>
   </div>
@@ -2115,23 +2233,23 @@
     <div class="roi-grid">
       <div class="roi-card dark">
         <div class="label">ROAS · LTV 12 meses</div>
-        <div class="value accent">32,4×</div>
-        <div class="sub">Pra cada R$ 1 investido em Meta Ads (R$ 964), R$ 32,40 de receita estimada em 12 meses · base: 10 vendas atribuídas</div>
+        <div class="value accent">29,2×</div>
+        <div class="sub">Pra cada R$ 1 investido em Meta Ads (R$ 964), R$ 29,20 de receita estimada em 12 meses · base: 9 vendas atribuídas</div>
       </div>
       <div class="roi-card">
         <div class="label">CAC · Custo por venda</div>
-        <div class="value">R$ 96,40</div>
-        <div class="sub">R$ 964 Meta Ads ÷ 10 vendas atribuídas a Rede Social</div>
+        <div class="value">R$ 107,11</div>
+        <div class="sub">R$ 964 Meta Ads ÷ 9 vendas atribuídas a Redes Sociais</div>
       </div>
       <div class="roi-card">
         <div class="label">Receita 1º mês (já cobre)</div>
-        <div class="value">R$ 4.430</div>
-        <div class="sub">4,6× o investido — 10 × (R$ 244 + R$ 199 setup)</div>
+        <div class="value">R$ 3.987</div>
+        <div class="sub">4,1× o investido — 9 × (R$ 244 + R$ 199 setup)</div>
       </div>
       <div class="roi-card">
         <div class="label">Receita estimada 12 meses</div>
-        <div class="value accent">R$ 31.270</div>
-        <div class="sub">10 vendas × R$ 244 × 12 + 10 × R$ 199 setup</div>
+        <div class="value accent">R$ 28.143</div>
+        <div class="sub">9 vendas × R$ 244 × 12 + 9 × R$ 199 setup</div>
       </div>
     </div>
 
@@ -2926,9 +3044,676 @@
       li.addEventListener('mouseleave', function(){ li.style.transform = ''; });
     });
   })();
+
+  // SELETOR DE MESES — esconde reading progress fora do Mar/Abr
+  document.querySelectorAll('input.month-radio').forEach(function(r) {
+    r.addEventListener('change', function() {
+      var rp = document.querySelector('.reading-progress');
+      var rl = document.querySelector('.reading-progress-label');
+      var isMarAbr = (r.id === 'r-marco-abril-2026');
+      if (rp) rp.style.display = isMarAbr ? '' : 'none';
+      if (rl) rl.style.display = isMarAbr ? '' : 'none';
+      // Scroll suave pro topo do conteúdo
+      var hero = document.querySelector('.hero');
+      if (hero) {
+        var rect = hero.getBoundingClientRect();
+        window.scrollTo({ top: window.scrollY + rect.bottom - 100, behavior: 'smooth' });
+      }
+    });
+  });
 </script>
 
 
+</div>
+
+<div class="month-page" id="page-janeiro-fevereiro-2026" data-month-page="janeiro-fevereiro-2026">
+  <div class="mini-dash">
+    <div class="container">
+      <div class="section-eyebrow">Resumo Mensal · DWV</div>
+      <h2 class="section-title">Janeiro & Fevereiro 2026</h2>
+      <p class="section-sub">Métricas-chave consolidadas do período. Versão simplificada — para análise completa com mapas e ROI calculado, troque o seletor para <b>Mar / Abr 2026</b>.</p>
+
+      <h3 class="mini-h3">📱 App Downloads</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Total Investido</div>
+          <div class="value">R$ 12.807</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Pessoas Alcançadas</div>
+          <div class="value">709.988</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Cadastros App</div>
+          <div class="value accent">1.913</div>
+          <div class="breakdown"><b>+3,1%</b> crescimento total de usuários</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Período</div>
+          <div class="value">Jan/Fev</div>
+          <div class="breakdown">2026</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">📸 Instagram</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Novos Seguidores</div>
+          <div class="value accent">+3.991</div>
+          <div class="breakdown">no período</div>
+        </div>
+        <div class="stat-card" style="grid-column: span 3">
+          <div class="label">Top Cidades (% audiência)</div>
+          <div class="value" style="font-size:15px;line-height:1.5;font-weight:600">Itapema 10,4% · São Paulo 9,4% · Bal. Camboriú 8,2% · Curitiba 7,1%</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">💎 Meta Ads · Clube Premium</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Investido</div>
+          <div class="value">R$ 2.930</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Leads (Landing Pages)</div>
+          <div class="value accent">216</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Pessoas Alcançadas</div>
+          <div class="value">25.990</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">▶ YouTube · Segredos Imobiliários</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Visualizações Totais</div>
+          <div class="value">189.976</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Inscritos Totais</div>
+          <div class="value">2.1 Mil</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Receita YouTube</div>
+          <div class="value accent">R$ 3.052,40</div>
+        </div>
+      </div>
+
+      
+      <h3 class="mini-h3">💰 ROI · O que ganhamos vs. investimos</h3>
+      <div class="info-banner" style="margin-top:8px">
+        <b>Atribuição honesta</b> — só contando as <b>10 vendas</b> do Clube Premium marcadas como <b>"Redes Sociais"</b> no CRM (DWV) + receita direta do YouTube. Vendas que vieram de comercial, indicações ou outros canais não entram aqui.
+      </div>
+      <div class="roi-grid">
+        <div class="roi-card">
+          <div class="label">Investido</div>
+          <div class="value">R$ 15.737</div>
+          <div class="sub">App downloads + Meta Ads Clube Premium</div>
+        </div>
+        <div class="roi-card dark">
+          <div class="label">Estimado em receita (LTV 12m)</div>
+          <div class="value accent">R$ 34.322</div>
+          <div class="sub">Clube Premium R$ 31.270 (10 × R$ 3.127) + YouTube R$ 3.052,40</div>
+        </div>
+        <div class="roi-card">
+          <div class="label">Retorno consolidado</div>
+          <div class="value accent">2,18×</div>
+          <div class="sub">R$ 34.322 ÷ R$ 15.737</div>
+        </div>
+        <div class="roi-card">
+          <div class="label">Vendas Clube Premium</div>
+          <div class="value">10</div>
+          <div class="sub">Atribuídas a "Redes Sociais" no CRM · LTV considerado: 12 meses do plano médio (R$ 244)</div>
+        </div>
+      </div>
+
+      <p style="margin-top:48px;font-size:13px;color:var(--gray-500);text-align:center">
+        Dados extraídos do PDF "Marketing — Janeiro & Fevereiro 2026". Detalhes adicionais (top cidades por bairro de SP, time, etc.) no PDF original.
+      </p>
+    </div>
+  </div>
+</div>
+<div class="month-page" id="page-dezembro-2025" data-month-page="dezembro-2025">
+  <div class="mini-dash">
+    <div class="container">
+      <div class="section-eyebrow">Resumo Mensal · DWV</div>
+      <h2 class="section-title">Dezembro 2025</h2>
+      <p class="section-sub">Métricas-chave consolidadas do período. Versão simplificada — para análise completa com mapas e ROI calculado, troque o seletor para <b>Mar / Abr 2026</b>.</p>
+
+      <h3 class="mini-h3">📱 App Downloads</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Total Investido</div>
+          <div class="value">R$ 1.253</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Pessoas Alcançadas</div>
+          <div class="value">109.589</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Cadastros App</div>
+          <div class="value accent">712</div>
+          <div class="breakdown"><b>+1,1%</b> crescimento total de usuários</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Período</div>
+          <div class="value">Dezembro</div>
+          <div class="breakdown">2025</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">📸 Instagram</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Novos Seguidores</div>
+          <div class="value accent">+1.860</div>
+          <div class="breakdown">no período</div>
+        </div>
+        <div class="stat-card" style="grid-column: span 3">
+          <div class="label">Top Cidades (% audiência)</div>
+          <div class="value" style="font-size:15px;line-height:1.5;font-weight:600">Itapema 11,3% · São Paulo 9,1% · Bal. Camboriú 8,8% · Curitiba 7,6%</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">💎 Meta Ads · Clube Premium</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Investido</div>
+          <div class="value">R$ 962</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Leads (Landing Pages)</div>
+          <div class="value accent">52</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Pessoas Alcançadas</div>
+          <div class="value">16.000</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">▶ YouTube · Segredos Imobiliários</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Visualizações Totais</div>
+          <div class="value">238 Mil</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Inscritos Totais</div>
+          <div class="value">1.7 Mil</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Receita YouTube</div>
+          <div class="value accent">R$ 1.548,99</div>
+        </div>
+      </div>
+
+      
+      <h3 class="mini-h3">💰 ROI · O que ganhamos vs. investimos</h3>
+      <div class="info-banner" style="margin-top:8px">
+        <b>Atribuição honesta</b> — só contando as <b>5 vendas</b> do Clube Premium marcadas como <b>"Redes Sociais"</b> no CRM (DWV) + receita direta do YouTube. Vendas que vieram de comercial, indicações ou outros canais não entram aqui.
+      </div>
+      <div class="roi-grid">
+        <div class="roi-card">
+          <div class="label">Investido</div>
+          <div class="value">R$ 2.215</div>
+          <div class="sub">App downloads + Meta Ads Clube Premium</div>
+        </div>
+        <div class="roi-card dark">
+          <div class="label">Estimado em receita (LTV 12m)</div>
+          <div class="value accent">R$ 17.184</div>
+          <div class="sub">Clube Premium R$ 15.635 (5 × R$ 3.127) + YouTube R$ 1.548,99</div>
+        </div>
+        <div class="roi-card">
+          <div class="label">Retorno consolidado</div>
+          <div class="value accent">7,76×</div>
+          <div class="sub">R$ 17.184 ÷ R$ 2.215</div>
+        </div>
+        <div class="roi-card">
+          <div class="label">Vendas Clube Premium</div>
+          <div class="value">5</div>
+          <div class="sub">Atribuídas a "Redes Sociais" no CRM · LTV considerado: 12 meses do plano médio (R$ 244)</div>
+        </div>
+      </div>
+
+      <p style="margin-top:48px;font-size:13px;color:var(--gray-500);text-align:center">
+        Dados extraídos do PDF "Marketing — Dezembro 2025". Detalhes adicionais (top cidades por bairro de SP, time, etc.) no PDF original.
+      </p>
+    </div>
+  </div>
+</div>
+<div class="month-page" id="page-novembro-2025" data-month-page="novembro-2025">
+  <div class="mini-dash">
+    <div class="container">
+      <div class="section-eyebrow">Resumo Mensal · DWV</div>
+      <h2 class="section-title">Novembro 2025</h2>
+      <p class="section-sub">Métricas-chave consolidadas do período. Versão simplificada — para análise completa com mapas e ROI calculado, troque o seletor para <b>Mar / Abr 2026</b>.</p>
+
+      <h3 class="mini-h3">📱 App Downloads</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Total Investido</div>
+          <div class="value">R$ 2.450,14</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Pessoas Alcançadas</div>
+          <div class="value">216.252</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Cadastros App</div>
+          <div class="value accent">965</div>
+          <div class="breakdown"><b>+1,5%</b> crescimento total de usuários</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Período</div>
+          <div class="value">Novembro</div>
+          <div class="breakdown">2025</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">📸 Instagram</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Novos Seguidores</div>
+          <div class="value accent">+3.825</div>
+          <div class="breakdown">no período</div>
+        </div>
+        <div class="stat-card" style="grid-column: span 3">
+          <div class="label">Top Cidades (% audiência)</div>
+          <div class="value" style="font-size:15px;line-height:1.5;font-weight:600">Itapema 11,6% · São Paulo 8,9% · Bal. Camboriú 8,9% · Curitiba 7,6%</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">💎 Meta Ads · Clube Premium</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Investido</div>
+          <div class="value">R$ 857,96</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Leads (Landing Pages)</div>
+          <div class="value accent">81</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Pessoas Alcançadas</div>
+          <div class="value">13.702</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">▶ YouTube · Segredos Imobiliários</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Visualizações Totais</div>
+          <div class="value">475.197</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Inscritos Totais</div>
+          <div class="value">1.7 Mil</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Receita YouTube</div>
+          <div class="value accent">R$ 2.190,65</div>
+        </div>
+      </div>
+
+      
+      <h3 class="mini-h3">💰 ROI · O que ganhamos vs. investimos</h3>
+      <div class="info-banner" style="margin-top:8px">
+        <b>Atribuição honesta</b> — só contando as <b>1 venda</b> do Clube Premium marcadas como <b>"Redes Sociais"</b> no CRM (DWV) + receita direta do YouTube. Vendas que vieram de comercial, indicações ou outros canais não entram aqui.
+      </div>
+      <div class="roi-grid">
+        <div class="roi-card">
+          <div class="label">Investido</div>
+          <div class="value">R$ 3.308</div>
+          <div class="sub">App downloads + Meta Ads Clube Premium</div>
+        </div>
+        <div class="roi-card dark">
+          <div class="label">Estimado em receita (LTV 12m)</div>
+          <div class="value accent">R$ 5.318</div>
+          <div class="sub">Clube Premium R$ 3.127 (1 × R$ 3.127) + YouTube R$ 2.190,65</div>
+        </div>
+        <div class="roi-card">
+          <div class="label">Retorno consolidado</div>
+          <div class="value accent">1,61×</div>
+          <div class="sub">R$ 5.318 ÷ R$ 3.308</div>
+        </div>
+        <div class="roi-card">
+          <div class="label">Vendas Clube Premium</div>
+          <div class="value">1</div>
+          <div class="sub">Atribuídas a "Redes Sociais" no CRM · LTV considerado: 12 meses do plano médio (R$ 244)</div>
+        </div>
+      </div>
+
+      <p style="margin-top:48px;font-size:13px;color:var(--gray-500);text-align:center">
+        Dados extraídos do PDF "Marketing — Novembro 2025". Detalhes adicionais (top cidades por bairro de SP, time, etc.) no PDF original.
+      </p>
+    </div>
+  </div>
+</div>
+<div class="month-page" id="page-outubro-2025" data-month-page="outubro-2025">
+  <div class="mini-dash">
+    <div class="container">
+      <div class="section-eyebrow">Resumo Mensal · DWV</div>
+      <h2 class="section-title">Outubro 2025</h2>
+      <p class="section-sub">Métricas-chave consolidadas do período. Versão simplificada — para análise completa com mapas e ROI calculado, troque o seletor para <b>Mar / Abr 2026</b>.</p>
+
+      <h3 class="mini-h3">📱 App Downloads</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Total Investido</div>
+          <div class="value">R$ 2.360</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Pessoas Alcançadas</div>
+          <div class="value">225.344</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Cadastros App</div>
+          <div class="value accent">1.094</div>
+          <div class="breakdown"><b>+1,8%</b> crescimento total de usuários</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Período</div>
+          <div class="value">Outubro</div>
+          <div class="breakdown">2025</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">📸 Instagram</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Novos Seguidores</div>
+          <div class="value accent">+2.241</div>
+          <div class="breakdown">no período</div>
+        </div>
+        <div class="stat-card" style="grid-column: span 3">
+          <div class="label">Top Cidades (% audiência)</div>
+          <div class="value" style="font-size:15px;line-height:1.5;font-weight:600">Itapema 11,6% · São Paulo 10% · Bal. Camboriú 9,2% · Curitiba 8%</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">💎 Meta Ads · Clube Premium</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Investido</div>
+          <div class="value">R$ 942</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Leads (Landing Pages)</div>
+          <div class="value accent">103</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Pessoas Alcançadas</div>
+          <div class="value">35.046</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">▶ YouTube · Segredos Imobiliários</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Visualizações Totais</div>
+          <div class="value">112.904</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Inscritos Totais</div>
+          <div class="value">1.8 Mil</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Receita YouTube</div>
+          <div class="value accent">R$ 2.646,50</div>
+        </div>
+      </div>
+
+      
+      <h3 class="mini-h3">💰 ROI · O que ganhamos vs. investimos</h3>
+      <div class="info-banner" style="margin-top:8px">
+        <b>Atribuição honesta</b> — só contando as <b>5 vendas</b> do Clube Premium marcadas como <b>"Redes Sociais"</b> no CRM (DWV) + receita direta do YouTube. Vendas que vieram de comercial, indicações ou outros canais não entram aqui.
+      </div>
+      <div class="roi-grid">
+        <div class="roi-card">
+          <div class="label">Investido</div>
+          <div class="value">R$ 3.302</div>
+          <div class="sub">App downloads + Meta Ads Clube Premium</div>
+        </div>
+        <div class="roi-card dark">
+          <div class="label">Estimado em receita (LTV 12m)</div>
+          <div class="value accent">R$ 18.282</div>
+          <div class="sub">Clube Premium R$ 15.635 (5 × R$ 3.127) + YouTube R$ 2.646,50</div>
+        </div>
+        <div class="roi-card">
+          <div class="label">Retorno consolidado</div>
+          <div class="value accent">5,54×</div>
+          <div class="sub">R$ 18.282 ÷ R$ 3.302</div>
+        </div>
+        <div class="roi-card">
+          <div class="label">Vendas Clube Premium</div>
+          <div class="value">5</div>
+          <div class="sub">Atribuídas a "Redes Sociais" no CRM · LTV considerado: 12 meses do plano médio (R$ 244)</div>
+        </div>
+      </div>
+
+      <p style="margin-top:48px;font-size:13px;color:var(--gray-500);text-align:center">
+        Dados extraídos do PDF "Marketing — Outubro 2025". Detalhes adicionais (top cidades por bairro de SP, time, etc.) no PDF original.
+      </p>
+    </div>
+  </div>
+</div>
+<div class="month-page" id="page-setembro-2025" data-month-page="setembro-2025">
+  <div class="mini-dash">
+    <div class="container">
+      <div class="section-eyebrow">Resumo Mensal · DWV</div>
+      <h2 class="section-title">Setembro 2025</h2>
+      <p class="section-sub">Métricas-chave consolidadas do período. Versão simplificada — para análise completa com mapas e ROI calculado, troque o seletor para <b>Mar / Abr 2026</b>.</p>
+
+      <h3 class="mini-h3">📱 App Downloads</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Total Investido</div>
+          <div class="value">R$ 3.624</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Pessoas Alcançadas</div>
+          <div class="value">337.137</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Cadastros App</div>
+          <div class="value accent">1.061</div>
+          <div class="breakdown"><b>+1,7%</b> crescimento total de usuários</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Período</div>
+          <div class="value">Setembro</div>
+          <div class="breakdown">2025</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">📸 Instagram</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Novos Seguidores</div>
+          <div class="value accent">+2.796</div>
+          <div class="breakdown">no período</div>
+        </div>
+        <div class="stat-card" style="grid-column: span 3">
+          <div class="label">Top Cidades (% audiência)</div>
+          <div class="value" style="font-size:15px;line-height:1.5;font-weight:600">Itapema 11,7% · São Paulo 9,8% · Bal. Camboriú 9,6% · Curitiba 8,2%</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">💎 Meta Ads · Clube Premium</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Investido</div>
+          <div class="value">R$ 828</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Leads (Landing Pages)</div>
+          <div class="value accent">70</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Pessoas Alcançadas</div>
+          <div class="value">13.061</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">▶ YouTube · Segredos Imobiliários</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Visualizações Totais</div>
+          <div class="value">72k</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Inscritos Totais</div>
+          <div class="value">1.2 Mil</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Receita YouTube</div>
+          <div class="value accent">R$ 1.601,43</div>
+        </div>
+      </div>
+
+      
+      <h3 class="mini-h3">💰 ROI · O que ganhamos vs. investimos</h3>
+      <div class="info-banner" style="margin-top:8px">
+        <b>Atribuição honesta</b> — só contando as <b>7 vendas</b> do Clube Premium marcadas como <b>"Redes Sociais"</b> no CRM (DWV) + receita direta do YouTube. Vendas que vieram de comercial, indicações ou outros canais não entram aqui.
+      </div>
+      <div class="roi-grid">
+        <div class="roi-card">
+          <div class="label">Investido</div>
+          <div class="value">R$ 4.452</div>
+          <div class="sub">App downloads + Meta Ads Clube Premium</div>
+        </div>
+        <div class="roi-card dark">
+          <div class="label">Estimado em receita (LTV 12m)</div>
+          <div class="value accent">R$ 23.490</div>
+          <div class="sub">Clube Premium R$ 21.889 (7 × R$ 3.127) + YouTube R$ 1.601,43</div>
+        </div>
+        <div class="roi-card">
+          <div class="label">Retorno consolidado</div>
+          <div class="value accent">5,28×</div>
+          <div class="sub">R$ 23.490 ÷ R$ 4.452</div>
+        </div>
+        <div class="roi-card">
+          <div class="label">Vendas Clube Premium</div>
+          <div class="value">7</div>
+          <div class="sub">Atribuídas a "Redes Sociais" no CRM · LTV considerado: 12 meses do plano médio (R$ 244)</div>
+        </div>
+      </div>
+
+      <p style="margin-top:48px;font-size:13px;color:var(--gray-500);text-align:center">
+        Dados extraídos do PDF "Marketing — Setembro 2025". Detalhes adicionais (top cidades por bairro de SP, time, etc.) no PDF original.
+      </p>
+    </div>
+  </div>
+</div>
+<div class="month-page" id="page-agosto-2025" data-month-page="agosto-2025">
+  <div class="mini-dash">
+    <div class="container">
+      <div class="section-eyebrow">Resumo Mensal · DWV</div>
+      <h2 class="section-title">Agosto 2025</h2>
+      <p class="section-sub">Métricas-chave consolidadas do período. Versão simplificada — para análise completa com mapas e ROI calculado, troque o seletor para <b>Mar / Abr 2026</b>.</p>
+
+      <h3 class="mini-h3">📱 App Downloads</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Total Investido</div>
+          <div class="value">R$ 1.935</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Pessoas Alcançadas</div>
+          <div class="value">285.000</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Cadastros App</div>
+          <div class="value accent">910</div>
+          <div class="breakdown"><b>+1,9%</b> crescimento total de usuários</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Período</div>
+          <div class="value">Agosto</div>
+          <div class="breakdown">2025</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">📸 Instagram</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Novos Seguidores</div>
+          <div class="value accent">+558</div>
+          <div class="breakdown">no período</div>
+        </div>
+        <div class="stat-card" style="grid-column: span 3">
+          <div class="label">Top Cidades (% audiência)</div>
+          <div class="value" style="font-size:15px;line-height:1.5;font-weight:600">Itapema 11,9% · Bal. Camboriú 9,7% · São Paulo 9,6% · Curitiba 8,2%</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">💎 Meta Ads · Clube Premium</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Investido</div>
+          <div class="value">R$ 738</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Leads (Landing Pages)</div>
+          <div class="value accent">83</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Pessoas Alcançadas</div>
+          <div class="value">12.733</div>
+        </div>
+      </div>
+
+      <h3 class="mini-h3">▶ YouTube · Segredos Imobiliários</h3>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="label">Visualizações Totais</div>
+          <div class="value">85k</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Inscritos Totais</div>
+          <div class="value">1.5 Mil</div>
+        </div>
+        <div class="stat-card">
+          <div class="label">Receita YouTube</div>
+          <div class="value accent">R$ 2.159,56</div>
+        </div>
+      </div>
+
+      
+      <h3 class="mini-h3">💰 ROI · O que ganhamos vs. investimos</h3>
+      <div class="info-banner" style="margin-top:8px">
+        <b>Atribuição honesta</b> — só contando as <b>5 vendas</b> do Clube Premium marcadas como <b>"Redes Sociais"</b> no CRM (DWV) + receita direta do YouTube. Vendas que vieram de comercial, indicações ou outros canais não entram aqui.
+      </div>
+      <div class="roi-grid">
+        <div class="roi-card">
+          <div class="label">Investido</div>
+          <div class="value">R$ 2.673</div>
+          <div class="sub">App downloads + Meta Ads Clube Premium</div>
+        </div>
+        <div class="roi-card dark">
+          <div class="label">Estimado em receita (LTV 12m)</div>
+          <div class="value accent">R$ 17.795</div>
+          <div class="sub">Clube Premium R$ 15.635 (5 × R$ 3.127) + YouTube R$ 2.159,56</div>
+        </div>
+        <div class="roi-card">
+          <div class="label">Retorno consolidado</div>
+          <div class="value accent">6,66×</div>
+          <div class="sub">R$ 17.795 ÷ R$ 2.673</div>
+        </div>
+        <div class="roi-card">
+          <div class="label">Vendas Clube Premium</div>
+          <div class="value">5</div>
+          <div class="sub">Atribuídas a "Redes Sociais" no CRM · LTV considerado: 12 meses do plano médio (R$ 244)</div>
+        </div>
+      </div>
+
+      <p style="margin-top:48px;font-size:13px;color:var(--gray-500);text-align:center">
+        Dados extraídos do PDF "Marketing — Agosto 2025". Detalhes adicionais (top cidades por bairro de SP, time, etc.) no PDF original.
+      </p>
+    </div>
+  </div>
+</div>
 <!-- READING PROGRESS BAR -->
 <div class="reading-progress" aria-hidden="true"><div class="reading-progress-fill" id="readingFill"></div></div>
 <div class="reading-progress-label" id="readingLabel">0%</div>
